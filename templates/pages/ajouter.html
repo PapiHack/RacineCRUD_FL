@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    RacineCRUD - Ajout
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Projet - RacineCRUD version Flask by <a href="http://www.itdev.site" target="_blank" title="visit itdev's website">@the_it_dev</a></h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Ajout d'un user</h2>
+
+                <p><a href="{{ url_for('home') }}"><i class="fa fa-arrow-left"></i> Retour à la liste</a></p>
+
+                {% for msg in get_flashed_messages(category_filter=['ajout_er']) %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ msg }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                <form action="{{ url_for('ajouter_user') }}" method="POST" class="col-lg-6">
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prenom</label>
+                        <input type="text" id="prenom" name="prenom" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="mail">Mail</label>
+                        <input type="email" id="mail" name="mail" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="tel">Telephone</label>
+                        <input type="text" id="tel" name="tel" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="mdp">Mot de passe</label>
+                        <input type="password" id="mdp" name="mdp" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="cmdp">Confirmer mot de passe</label>
+                        <input type="password" id="cmdp" name="cmdp" class="form-control"/>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success" value="Ajouter"/>
+                        <a href="{{ url_for('home') }}" class="btn btn-danger">Annuler</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

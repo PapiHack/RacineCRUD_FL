@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    RacineCRUD - Index
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Projet - RacineCRUD version Flask by <a href="http://www.itdev.site" target="_blank" title="visit itdev's website">@the_it_dev</a></h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 style="text-decoration: underline;" align="center">Liste des users</h2>
+
+                <p><a href="{{ url_for('ajouter_user') }}" class="btn btn-success"><i class="fa fa-user-plus"></i> Ajouter un user</a></p>
+
+                {% for msg in get_flashed_messages(category_filter=['ajout_s']) %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ msg }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {% for msg in get_flashed_messages(category_filter=['modif_er']) %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ msg }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {% for msg in get_flashed_messages(category_filter=['sup_er']) %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ msg }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {% for msg in get_flashed_messages(category_filter=['sup_s']) %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ msg }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {% for msg in get_flashed_messages(category_filter=['modif_s']) %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ msg }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                <table class="table table-striped table-bordered" id="tab">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Mail</th>
+                        <th>Tel</th>
+                        <th>Password</th>
+                        <th>Opérarions</th>
+                    </tr>
+
+                    {% for user in users %}
+                        <tr>
+                            <td> {{ user.prenom }} {{ user.nom }} </td>
+                            <td> {{ user.mail }} </td>
+                            <td> {{ user.tel }} </td>
+                            <td> <b>{{ user.mdp|crypt }}</b> </td>
+                            <td> <a href="{{ url_for('modifier_user', id=user.id) }}" class="btn btn-warning" title="Editer"><i class="fa fa-edit"></i></a> <a href="{{ url_for('supprimer_user', id=user.id) }}" name="del" class="btn btn-danger" title="Supprimer"><i class="fa fa-trash"></i></a> </td>
+                        </tr>
+                        {% else %}
+                        <h2>Pas de user pour le moment.</h2>
+                    {% endfor %}
+                    
+                </table>
+                
+            </div>
+        </div>
+    </div>
+
+    {% block other %}
+    <script>
+        $(document).ready(function(){
+            $('#tab').DataTable();
+        })
+
+        var del = document.getElementsByName('del');
+        for(var i = 0; i < del.length; i++)
+        {
+            del[i].onclick = function(e){
+                if(!confirm("Voulez-vous vraiment supprimer ce user ?"))
+                {
+                    e.preventDefault();
+                }
+            }
+        }
+    </script>
+    {% endblock %}
+
+{% endblock %}
+
+
+
+
+
